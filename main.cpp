@@ -1,24 +1,22 @@
 // Lotto.cpp : Defines the entry point for the console application.
 //
 
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <time.h>
-#include <vector>
 #include <set>
-#include <memory>
-#include <algorithm>
+#include <ctime>
+#include <string>
+#include <vector>
+#include <sstream>
 #include <fstream>
 #include <iomanip>
+#include <iostream>
+#include <algorithm>
 
-#include <boost/random/linear_congruential.hpp>
 #include <boost/random/uniform_int.hpp>
+#include <boost/generator_iterator.hpp>
 #include <boost/random/uniform_real.hpp>
 #include <boost/random/variate_generator.hpp>
-#include <boost/generator_iterator.hpp>
-#include <ctime>
-#include "main.h"
+#include <boost/random/linear_congruential.hpp>
+
 using namespace std;
 
 constexpr int ammOfNumbers = 6;
