@@ -1,7 +1,6 @@
 // Lotto.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -11,6 +10,7 @@
 #include <memory>
 #include <algorithm>
 #include <fstream>
+#include <iomanip>
 
 #include <boost/random/linear_congruential.hpp>
 #include <boost/random/uniform_int.hpp>
@@ -23,35 +23,30 @@ using namespace std;
 
 constexpr int ammOfNumbers = 6;
 constexpr int maxVal = 49;
-constexpr int amOfSets = 30;
+constexpr int amOfSets = 24;
 
 template<typename T>
 string toString(T inArg)
 {
-    stringstream retVal{};
+    stringstream retVal;
 
     for (auto it : inArg)
     {
-        retVal << it << ",";
+        retVal << std::setw(2) << std::left << it << ", ";
     }
 
-    return retVal.str();
+    std::string stringedStream = retVal.str();
+    return stringedStream.substr(0, stringedStream.size() - 2);
 }
 
 vector<int> getSixLottoValues();
-
-typedef boost::minstd_rand base_generator_type;
+using base_generator_type = boost::minstd_rand;
 base_generator_type generator(1);
-
 boost::uniform_int<> uni_dist(1, 49);
-
 
 int main()
 {
     generator.seed(static_cast<unsigned int>(std::time(0)));
-
-	int val = 3;
-	int* valPtr = &val;
 
 	vector<vector<int>> endVal;
 	for (int i = 0; i < amOfSets; i++) 
@@ -65,13 +60,13 @@ int main()
     }
 
     {
-        std::ofstream file{ "results.txt" };
+        std::ofstream file = std::ofstream("results.txt");
 
         if (file.is_open())
         {
             for (auto it : endVal)
             {
-                file << toString(it) << "END\n";
+                file << toString(it) << "\n";
             }
         }
     }
@@ -98,11 +93,9 @@ vector<int> removeReplications(vector<int> aVal)
 
 vector<int> getSixLottoValues()
 { 
-
-
     boost::variate_generator<base_generator_type&, boost::uniform_int<> > uni(generator, uni_dist);
 
-	vector<int> retVal {};
+    vector<int> retVal;
     
     for (int i = 0; i < ammOfNumbers; i++)
     {
@@ -113,5 +106,3 @@ vector<int> getSixLottoValues()
 
 	return std::move(retVal);
 }
-
-
